@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "129698269091",
+    "project_id": "blog-app-0612",
+    "storage_bucket": "blog-app-0612.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129698269091:android:2379d4fcf9770eb5eafc16",
+        "android_client_info": {
+          "package_name": "com.devloook.blogapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEQxP3y64bmB7Qlshn6rQmZISHmTdy0r8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
