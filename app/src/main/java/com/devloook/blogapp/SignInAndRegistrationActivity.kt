@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.devloook.blogapp.Model.UserData
 import com.devloook.blogapp.databinding.ActivitySignInAndRegistrationBinding
+import com.devloook.blogapp.register.WelcomeActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
@@ -78,6 +79,9 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                         .addOnCompleteListener { task ->
                             if(task.isSuccessful){
                                 Toast.makeText(this, "User Login Successfully 😎", Toast.LENGTH_SHORT).show()
+
+                                //After Successful Login, Move to MainActivity
+                                startActivity(Intent(this, MainActivity::class.java))
                             }else{
                                 Toast.makeText(this, "User Login Failed! 😵‍💫", Toast.LENGTH_SHORT).show()
                             }
@@ -114,6 +118,9 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                                     val storageReference: StorageReference = storage.reference.child("profile_image/$userId.jpg")
                                     storageReference.putFile(imageUri!!)
                                     Toast.makeText(this, "User Registered Successfully", Toast.LENGTH_SHORT).show()
+
+                                    //After Successful Registration, Move to MainActivity
+                                    startActivity(Intent(this, WelcomeActivity::class.java))
                                 }
                             }else{
                                 Toast.makeText(this, "User Registration Failed!", Toast.LENGTH_SHORT).show()
