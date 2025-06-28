@@ -47,7 +47,6 @@
         android:textColor="@color/black"
         android:textSize="34sp"
         app:layout_constraintEnd_toEndOf="@+id/textView7"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -63,7 +62,7 @@
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="@+id/textView8"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
@@ -80,7 +79,7 @@
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
-        android:visibility="visible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/login_email_address"
         app:layout_constraintStart_toStartOf="@+id/login_email_address"
         app:layout_constraintTop_toBottomOf="@+id/login_email_address" />
@@ -154,7 +153,7 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginTop="8dp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:cardCornerRadius="200dp"
         app:layout_constraintEnd_toEndOf="@+id/textView8"
         app:layout_constraintStart_toStartOf="@+id/textView8"
@@ -182,7 +181,7 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintStart_toStartOf="@+id/cardView"
@@ -203,7 +202,7 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/register_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/register_name"
@@ -224,7 +223,7 @@
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="20sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="@+id/register_email"
         app:layout_constraintStart_toStartOf="@+id/register_email"
         app:layout_constraintTop_toBottomOf="@+id/register_email" />

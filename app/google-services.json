@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "129698269091",
+    "firebase_url": "https://blog-app-0612-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "blog-app-0612",
     "storage_bucket": "blog-app-0612.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.devloook.blogapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "129698269091-ugqp8vqvb9suvdfrdi752uit1jp7kfqk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devloook.blogapp",
+            "certificate_hash": "30140c270c7dc0247a2e72a102d2ee9556ba2172"
+          }
+        },
+        {
+          "client_id": "129698269091-n1ml4d6f8qq491hldu2m6dbi9p907gov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBEQxP3y64bmB7Qlshn6rQmZISHmTdy0r8"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129698269091-n1ml4d6f8qq491hldu2m6dbi9p907gov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
