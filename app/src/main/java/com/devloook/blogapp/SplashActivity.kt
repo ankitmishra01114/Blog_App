@@ -9,9 +9,14 @@ import androidx.core.view.WindowInsetsCompat
 import android.os.Handler
 import android.os.Looper
 import com.devloook.blogapp.register.WelcomeActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class SplashActivity : AppCompatActivity() {
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -26,4 +31,5 @@ class SplashActivity : AppCompatActivity() {
             finish()
         },3000)
     }
+
 }

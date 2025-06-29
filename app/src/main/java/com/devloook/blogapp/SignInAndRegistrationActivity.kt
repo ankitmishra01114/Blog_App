@@ -53,7 +53,7 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
         val action = intent.getStringExtra("action")
 
         // Adjust Visibility For Login
-        if(action == "login"){
+        if (action == "login") {
             binding.loginEmailAddress.visibility = View.VISIBLE
             binding.loginPassword.visibility = View.VISIBLE
             binding.loginButton.visibility = View.VISIBLE
@@ -72,25 +72,33 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                 val loginEmail: String = binding.loginEmailAddress.text.toString()
                 val loginPassword: String = binding.loginPassword.text.toString()
 
-                if (loginEmail.isEmpty() || loginPassword.isEmpty()){
+                if (loginEmail.isEmpty() || loginPassword.isEmpty()) {
                     Toast.makeText(this, "Please Fill All The Details", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     auth.signInWithEmailAndPassword(loginEmail, loginPassword)
                         .addOnCompleteListener { task ->
-                            if(task.isSuccessful){
-                                Toast.makeText(this, "User Login Successfully 😎", Toast.LENGTH_SHORT).show()
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this,
+                                    "User Login Successfully 😎",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
                                 //After Successful Login, Move to MainActivity
                                 startActivity(Intent(this, MainActivity::class.java))
-                            }else{
-                                Toast.makeText(this, "User Login Failed! 😵‍💫", Toast.LENGTH_SHORT).show()
+                                finish()
+
+
+                            } else {
+                                Toast.makeText(this, "User Login Failed! 😵‍💫", Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                 }
             }
 
 
-        }else if (action == "register"){
+        } else if (action == "register") {
             binding.loginButton.isEnabled = false
             binding.loginButton.alpha = 0.5f
 
@@ -100,30 +108,35 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                 val registerEmail: String = binding.registerEmail.text.toString()
                 val registerPassword: String = binding.registerPassword.text.toString()
 
-                if (registerName.isEmpty() || registerEmail.isEmpty() || registerPassword.isEmpty()){
+                if (registerName.isEmpty() || registerEmail.isEmpty() || registerPassword.isEmpty()) {
                     Toast.makeText(this, "Please Fill All The Details", Toast.LENGTH_SHORT).show()
-                }else{
+                } else {
                     auth.createUserWithEmailAndPassword(registerEmail, registerPassword)
                         .addOnCompleteListener { task ->
-                            if(task.isSuccessful){
+                            if (task.isSuccessful) {
                                 val user: FirebaseUser? = auth.currentUser
+                                auth.signOut()
                                 user?.let {
                                     // Store user data in to Firebase realtime database
-                                    val userReferece: DatabaseReference = database.getReference("users")
+                                    val userReferece: DatabaseReference =
+                                        database.getReference("users")
                                     val userId: String = user.uid
                                     val userData = UserData(registerName, registerEmail)
                                     userReferece.child(userId).setValue(userData)
 
                                     //Upload image to Firebase Storage
-                                    val storageReference: StorageReference = storage.reference.child("profile_image/$userId.jpg")
+                                    val storageReference: StorageReference =
+                                        storage.reference.child("profile_image/$userId.jpg")
                                     storageReference.putFile(imageUri!!)
-                                    Toast.makeText(this, "User Registered Successfully", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_SHORT).show()
 
                                     //After Successful Registration, Move to MainActivity
                                     startActivity(Intent(this, WelcomeActivity::class.java))
+
+                                    finish()
                                 }
-                            }else{
-                                Toast.makeText(this, "User Registration Failed!", Toast.LENGTH_SHORT).show()
+                            } else {
+                                Toast.makeText(this,"User Registration Failed!",Toast.LENGTH_SHORT).show()
                             }
                         }
                 }
@@ -138,7 +151,8 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(
                 Intent.createChooser(intent, "Select Image"),
-                PICK_IMAGE_REQUEST)
+                PICK_IMAGE_REQUEST
+            )
         }
 
     }
