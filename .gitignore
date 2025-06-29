@@ -1,15 +1,54 @@
+# ============ Android Studio/IntelliJ IDEA ============
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+*.iws
+.gradle/
 local.properties
+
+# ============ Build Files ============
+/build/
+/app/build/
+captures/
+.externalNativeBuild/
+
+# ============ OS Generated Files ============
+.DS_Store
+Thumbs.db
+
+# ============ Log and Temp Files ============
+*.log
+*.tmp
+*.temp
+
+# ============ APK & Output ============
+*.apk
+*.ap_
+*.aab
+
+# ============ Firebase Config (Sensitive) ============
+google-services.json
+firebase-debug.log
+
+# ============ Miscellaneous ============
+/*.keystore
+.cxx/
+*.lock
+*.db
+*.sqlite
+
+# ============ Kotlin Specific ============
+/out/
+*.class
+
+# ============ Jetpack Compose Preview Cache ============
+.idea/gradle.xml
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+
+# ============ Gradle Wrapper ============
+.gradle/
+gradle/wrapper/gradle-wrapper.properties
+
+# ============ Node/React Native (if using hybrid tools) ============
+node_modules/
