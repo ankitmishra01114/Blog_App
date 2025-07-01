@@ -7,4 +7,7 @@
     </style>
 
     <style name="Theme.BlogApp" parent="Base.Theme.BlogApp" />
+    <style name="round" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

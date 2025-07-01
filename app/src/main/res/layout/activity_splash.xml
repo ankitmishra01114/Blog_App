@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/background" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/love_ya_like_a_sister"

@@ -3,5 +3,6 @@
     <array name="preloaded_fonts" translatable="false">
         <item>@font/love_ya_like_a_sister</item>
         <item>@font/montserrat_alternates</item>
+        <item>@font/montserrat_light</item>
     </array>
 </resources>
