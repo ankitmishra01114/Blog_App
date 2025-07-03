@@ -76,21 +76,22 @@ class AddArticleActivity : AppCompatActivity() {
 
                             if (key != null) {
                                 val blogReference: DatabaseReference = databaseReference.child(key)
-                                blogReference.setValue(blogItemModel).addOnSuccessListener {
-                                    if (it.isSuccessfull){
+                                blogReference.setValue(blogItemModel)
+                                    .addOnSuccessListener {
                                         finish()
-                                    }else{
+                                    }
+                                    .addOnFailureListener {
                                         Toast.makeText(this@AddArticleActivity, "Failed to add blog", Toast.LENGTH_SHORT).show()
                                     }
-                                }
-
                             }
+
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        TODO("Not yet implemented")
+                        Toast.makeText(this@AddArticleActivity, "Failed to fetch user data: ${error.message}", Toast.LENGTH_SHORT).show()
                     }
+
                 })
             }
         }
