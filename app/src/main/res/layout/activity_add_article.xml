@@ -52,7 +52,7 @@
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="@font/love_ya_like_a_sister"
         android:text="Blog Description"
         android:textColor="@color/black"
