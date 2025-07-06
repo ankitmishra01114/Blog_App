@@ -34,13 +34,18 @@ class AddArticleActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        // For back button functionality
+        binding.imageButton.setOnClickListener {
+            finish()  // This will close the current activity and take you back to the previous screen
+        }
+
         binding.addBlogButton.setOnClickListener {
             val title = binding.blogTitle.text.toString().trim()
             val description = binding.blogDescription.text.toString().trim()
 
-
             if (title.isEmpty() || description.isEmpty()){
                 Toast.makeText(this, "Please Fill All The Fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
             }
 
             // Get current user
