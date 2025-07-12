@@ -120,7 +120,20 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                                     //Upload image to Firebase Storage
                                     val storageReference: StorageReference =
                                         storage.reference.child("profile_image/$userId.jpg")
-                                    storageReference.putFile(imageUri!!)
+                                    storageReference.putFile(imageUri!!).addOnCompleteListener{ task->
+                                        storageReference.downloadUrl.addOnCompleteListener { imageUri ->
+                                            val imageUrl: String = imageUri.toString()
+
+                                            //Save the Image Url to the Firebase Realtime Database
+                                            userReferece.child(userId).child("profileImage").setValue(imageUrl)
+
+                                            //For loading the image in the ImageView
+                                            Glide.with(this)
+                                                .load(imageUri)
+                                                .apply(RequestOptions.circleCropTransform())
+                                                .into(binding.registerUserImage)
+                                        }
+                                    }
                                     Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_SHORT).show()
 
                                     //After Successful Registration, Move to MainActivity

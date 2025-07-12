@@ -46,6 +46,8 @@ class AddArticleActivity : AppCompatActivity() {
             if (title.isEmpty() || description.isEmpty()){
                 Toast.makeText(this, "Please Fill All The Fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }else{
+                Toast.makeText(this, "Blog Added Successfully", Toast.LENGTH_SHORT).show()
             }
 
             // Get current user
