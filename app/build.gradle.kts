@@ -71,4 +71,8 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // HTTP Client Dependency (for Cloudinary API calls)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
 }

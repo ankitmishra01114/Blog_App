@@ -111,29 +111,40 @@ class SignInAndRegistrationActivity : AppCompatActivity() {
                                 auth.signOut()
                                 user?.let {
                                     // Store user data in to Firebase realtime database
-                                    val userReferece: DatabaseReference =
-                                        database.getReference("users")
+                                    val userReferece: DatabaseReference = database.getReference("users")
                                     val userId: String = user.uid
                                     val userData = UserData(registerName, registerEmail)
                                     userReferece.child(userId).setValue(userData)
 
-                                    //Upload image to Firebase Storage
-                                    val storageReference: StorageReference =
-                                        storage.reference.child("profile_image/$userId.jpg")
-                                    storageReference.putFile(imageUri!!).addOnCompleteListener{ task->
-                                        storageReference.downloadUrl.addOnCompleteListener { imageUri ->
-                                            val imageUrl: String = imageUri.toString()
+                                    // Upload image to Firebase Storage only if image selected
+                                    if (imageUri != null) {
+                                        val storageReference: StorageReference = storage.reference.child("profile_image/$userId.jpg")
+                                        storageReference.putFile(imageUri!!)
+                                            .addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+                                                storageReference.downloadUrl.addOnCompleteListener { imageUri ->
 
-                                            //Save the Image Url to the Firebase Realtime Database
-                                            userReferece.child(userId).child("profileImage").setValue(imageUrl)
+                                                    if(imageUri.isSuccessful){
+                                                        val imageUrl: String = imageUri.result.toString()
 
-                                            //For loading the image in the ImageView
-                                            Glide.with(this)
-                                                .load(imageUri)
-                                                .apply(RequestOptions.circleCropTransform())
-                                                .into(binding.registerUserImage)
+                                                        // Save the Image URL to the realtime database
+                                                        userReferece.child(userId).child("profileImage").setValue(imageUrl)
+
+                                                        // Load image into ImageView
+//                                                        Glide.with(this)
+//                                                            .load(imageUri)
+//                                                            .apply(RequestOptions.circleCropTransform())
+//                                                            .into(binding.registerUserImage)
+                                                    }
+                                                }
+                                            } else {
+                                                Toast.makeText(this, "Image upload failed!", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
+                                    } else {
+                                        Toast.makeText(this, "No profile image selected!", Toast.LENGTH_SHORT).show()
                                     }
+
                                     Toast.makeText(this,"User Registered Successfully",Toast.LENGTH_SHORT).show()
 
                                     //After Successful Registration, Move to MainActivity
