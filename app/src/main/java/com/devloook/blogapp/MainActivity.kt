@@ -67,6 +67,10 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
+                // Reverse the list to show newest first
+                blogItems.reverse()
+
+
                 // Notify the adapter that the data has changed
                 blogAdapter.notifyDataSetChanged()
             }
@@ -96,6 +100,7 @@ class MainActivity : AppCompatActivity() {
                         .into(binding.profileImage)
                 }
             }
+
 
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@MainActivity, "Failed to load profile image", Toast.LENGTH_SHORT).show()

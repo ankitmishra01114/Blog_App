@@ -13,6 +13,9 @@
         android:theme="@style/Theme.BlogApp"
         tools:targetApi="31">
         <activity
+            android:name=".ReadMoreActivity"
+            android:exported="false" />
+        <activity
             android:name=".AddArticleActivity"
             android:exported="false" />
         <activity
