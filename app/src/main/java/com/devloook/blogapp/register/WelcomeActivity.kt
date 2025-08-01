@@ -42,15 +42,15 @@ class WelcomeActivity : AppCompatActivity() {
 
 
     //This method is for check user is already login or not
-//    override fun onStart() {
-//        super.onStart()
-//        val currentUser: FirebaseUser? = auth.currentUser
-//        if (currentUser != null) {
-//            startActivity(Intent(this, MainActivity::class.java))
-//            finish()
-//        } else {
-//            startActivity(Intent(this, WelcomeActivity::class.java))
-//            finish()
-//        }
-//    }
+    override fun onStart() {
+        super.onStart()
+        val currentUser: FirebaseUser? = auth.currentUser
+        if (currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        } else {
+            startActivity(Intent(this, WelcomeActivity::class.java))
+            finish()
+        }
+    }
 }
