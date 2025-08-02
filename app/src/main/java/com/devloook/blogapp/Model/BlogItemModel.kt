@@ -10,7 +10,7 @@ data class BlogItemModel(
     val post: String? = "null",
     var likeCount: Int = 0,
     val profileImage: String? = "null",
-    val postId: String = "null",
+    var postId: String = "null",
     val likedBy: MutableList<String>? = null
 ) : Parcelable {
 

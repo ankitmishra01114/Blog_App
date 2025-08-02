@@ -68,7 +68,7 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
             }
 
             // Check If Current User has already liked the post Like the Post and update the like button accordingly
-            val postLikeReference = databaseReference.child("blogs").child("postId").child("likes")
+            val postLikeReference = databaseReference.child("blogs").child(postId).child("likes")
 
             val currentUserLiked: Unit? = currentUser?.uid?.let { uid ->
                 postLikeReference.child(uid).addListenerForSingleValueEvent(object : ValueEventListener {
@@ -104,7 +104,7 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
     }
 
     private fun handleLikeButtonClicked(postId: String, blogItemModel: BlogItemModel, binding: BlogItemBinding) {
-        val userReference = databaseReference.child("user").child(currentUser!!.uid)
+        val userReference = databaseReference.child("users").child(currentUser!!.uid)
         val postLikeReference = databaseReference.child("blogs").child(postId).child("likes")
 
         // Check User has already like the post, So unlike it
@@ -116,20 +116,46 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
                         .addOnSuccessListener {
                             postLikeReference.child(currentUser.uid).removeValue()
                             blogItemModel.likedBy?.remove(currentUser.uid)
-                            updateLikeButtonImage(binding, false)
+
 
                             // Decrement the like in the database
                             val newLikeCount = if (blogItemModel.likeCount > 0) blogItemModel.likeCount - 1 else 0
                             blogItemModel.likeCount = newLikeCount
 
+                            updateLikeButtonImage(binding, false)
+
                             // Update in Firebase (no need to add "blogs" again)
-                            databaseReference.child(postId).child("likeCount").setValue(newLikeCount)
+                            databaseReference.child("blogs").child(postId).child("likeCount").setValue(newLikeCount)
 
 
                             notifyDataSetChanged()
                         }
                         .addOnFailureListener { e ->
-                            Log.e("LikedClicked", "onDataChange: Failed to Unlike the Blog $e",)
+                            Log.e("LikedClicked", "onDataChange: Failed to Unlike the Blog $e", )
+                        }
+                }else{
+                    // User has not liked the post, so like it
+                    userReference.child("likes").child(postId).setValue(true)
+                        .addOnSuccessListener {
+                            postLikeReference.child(currentUser.uid).setValue(true)
+                            blogItemModel.likedBy?.add(currentUser.uid)
+
+
+                            // Increment the like count in the database
+                            val newLikeCount = blogItemModel.likeCount + 1
+                            blogItemModel.likeCount = newLikeCount
+
+                            updateLikeButtonImage(binding, true)
+
+                            // Update in Firebase (no need to add "blogs" again)
+                            databaseReference.child("blogs").child(postId).child("likeCount").setValue(newLikeCount)
+
+
+                            notifyDataSetChanged()
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("LikedClicked", "onDataChange: Failed to Like the Blog $e", )
+
                         }
                 }
             }
@@ -142,7 +168,12 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
 
     }
     private fun updateLikeButtonImage(binding: BlogItemBinding, liked: Boolean){
-        binding.likeButton.setImageResource(if (liked) R.drawable.icon1 else R.drawable.icon2)
+
+        if(liked){
+            binding.likeButton.setImageResource(R.drawable.icon2)
+        }else{
+            binding.likeButton.setImageResource(R.drawable.icon1)
+        }
     }
 
 }
