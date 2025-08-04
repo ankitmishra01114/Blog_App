@@ -1,5 +1,6 @@
 package com.devloook.blogapp.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
@@ -98,11 +99,23 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
             }
 
 
+            // Handle Save Button Clicks
+            binding.postSaveButton.setOnClickListener {
+                if (currentUser != null){
+                    handleSaveButtonClicked(postId, blogItemModel, binding)
+                }else{
+                    Toast.makeText(context, "Please Login First", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+
 
         }
 
     }
 
+
+    // Method for handle like functionality, Like or Unlike the post & Increment and Decrement the like count
     private fun handleLikeButtonClicked(postId: String, blogItemModel: BlogItemModel, binding: BlogItemBinding) {
         val userReference = databaseReference.child("users").child(currentUser!!.uid)
         val postLikeReference = databaseReference.child("blogs").child(postId).child("likes")
@@ -155,7 +168,6 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
                         }
                         .addOnFailureListener { e ->
                             Log.e("LikedClicked", "onDataChange: Failed to Like the Blog $e", )
-
                         }
                 }
             }
@@ -167,13 +179,69 @@ class BlogAdapter(private val items: List<BlogItemModel>): RecyclerView.Adapter<
         })
 
     }
-    private fun updateLikeButtonImage(binding: BlogItemBinding, liked: Boolean){
 
-        if(liked){
-            binding.likeButton.setImageResource(R.drawable.icon2)
-        }else{
-            binding.likeButton.setImageResource(R.drawable.icon1)
-        }
+    // Method for updating Like Button Image
+    private fun updateLikeButtonImage(binding: BlogItemBinding, liked: Boolean){
+        binding.likeButton.setImageResource(if (liked) R.drawable.icon2 else R.drawable.icon1 )
+    }
+
+
+    // Method for handle Save Post functionality, Save or UnSave the post
+    private fun handleSaveButtonClicked(postId: String, blogItemModel: BlogItemModel, binding: BlogItemBinding){
+        val userReference = databaseReference.child("users").child(currentUser!!.uid)
+        userReference.child("savedPosts").child(postId).addListenerForSingleValueEvent(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                // Check if data is available or not
+                if(snapshot.exists()){
+                    // The blog is currently saved by the user, So unsaved it
+                    userReference.child("savePosts").child(postId).removeValue()
+                        .addOnSuccessListener {
+                            // Update the UI
+                            val clickedBlogItem: BlogItemModel? = items.find{ it.postId == postId}
+                            clickedBlogItem?.isSaved = false
+
+                            notifyDataSetChanged()
+
+                            val context: Context? = binding.root.context
+                            Toast.makeText(context, "Blog Unsaved", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener{ e ->
+                            val context: Context? = binding.root.context
+                            Toast.makeText(context, "Failed to Unsaved the Blog", Toast.LENGTH_SHORT).show()
+                        }
+
+                    // Change the Save button image
+                    binding.postSaveButton.setImageResource(R.drawable.combined_shape4)
+                }else{
+                    // The blog is not saved by the user, So save it
+                    userReference.child("savedPosts").child(postId).setValue(true)
+                        .addOnSuccessListener {
+                            // Update the UI
+                            val clickedBlogItem: BlogItemModel? = items.find{ it.postId == postId}
+                            clickedBlogItem?.isSaved = true
+
+                            notifyDataSetChanged()
+
+                            val context: Context? = binding.root.context
+                            Toast.makeText(context, "Blog Saved!", Toast.LENGTH_SHORT).show()
+
+                        }
+                        .addOnFailureListener {
+                            val context: Context? = binding.root.context
+                            Toast.makeText(context, "Failed to Save the Blog", Toast.LENGTH_SHORT).show()
+                        }
+                }
+
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
     }
 
 }
