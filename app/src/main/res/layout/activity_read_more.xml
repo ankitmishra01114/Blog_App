@@ -13,7 +13,7 @@
         android:layout_height="24dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:background="@color/red"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/stroke1" />
@@ -106,20 +106,20 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/likeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:clickable="true"
-        app:shapeAppearanceOverlay="@style/round"
-        app:tint="@color/white"
         android:backgroundTint="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/floatingActionButton2"
-        app:layout_constraintEnd_toEndOf="@+id/blogDescriptionTextView"
-        app:srcCompat="@drawable/icon" />
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/postSaveButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/round"
+        app:srcCompat="@drawable/icon"
+        app:tint="@color/white" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton2"
+        android:id="@+id/postSaveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
@@ -128,9 +128,9 @@
         app:shapeAppearanceOverlay="@style/round"
         android:backgroundTint="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/likeButton"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/likeButton"
         app:srcCompat="@drawable/combined_shape4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

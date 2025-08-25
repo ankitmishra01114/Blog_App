@@ -46,12 +46,12 @@ class MainActivity : AppCompatActivity() {
 
         // set blog post into recycler view
         // initialize the recycler view and set adapter
-        val recyclerView: RecyclerView = binding.blogRecyclerView
+        val recyclerView: RecyclerView = binding.savedArticlesRecyclerView
         val blogAdapter = BlogAdapter(blogItems)
         recyclerView.adapter = blogAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // fetch data from firebase database
+        // fetch Blog data from firebase database
         databaseReference.addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 blogItems.clear()
@@ -76,10 +76,14 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
+        // Go to Add Article Activity
         binding.floatingAddArticleButton.setOnClickListener {
             startActivity(Intent(this, AddArticleActivity::class.java))
+        }
 
+        // Go to Saved Articles Activity
+        binding.savedArticlesButton.setOnClickListener {
+            startActivity(Intent(this, SavedArticlesActivity::class.java))
         }
     }
 

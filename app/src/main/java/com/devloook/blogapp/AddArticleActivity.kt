@@ -9,13 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.devloook.blogapp.databinding.ActivityAddArticleBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 class AddArticleActivity : AppCompatActivity() {
 
@@ -24,9 +20,7 @@ class AddArticleActivity : AppCompatActivity() {
     }
 
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("blogs")
-
     private val userReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("users")
-
     private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,76 +28,65 @@ class AddArticleActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
-        // For back button functionality
-        binding.imageButton.setOnClickListener {
-            finish()  // This will close the current activity and take you back to the previous screen
-        }
+        // Back button
+        binding.imageButton.setOnClickListener { finish() }
 
         binding.addBlogButton.setOnClickListener {
             val title = binding.blogTitle.text.toString().trim()
             val description = binding.blogDescription.text.toString().trim()
 
-            if (title.isEmpty() || description.isEmpty()){
+            if (title.isEmpty() || description.isEmpty()) {
                 Toast.makeText(this, "Please Fill All The Fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
-            }else{
-                Toast.makeText(this, "Blog Added Successfully", Toast.LENGTH_SHORT).show()
             }
 
-            // Get current user
             val user: FirebaseUser? = auth.currentUser
+            if (user != null) {
+                val userId = user.uid
 
-            if (user != null){
-                val userId: String = user.uid
-                val userName: String? = user.displayName?:"Anonymous"
-                val userImageUrl: String = user.photoUrl?.toString() ?: ""
-
-                // Fetch user name and user profile from database
-                userReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener{
+                // Fetch user data from DB
+                userReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         val userData: UserData? = snapshot.getValue(UserData::class.java)
-
                         if (userData != null) {
-                            val userNameFromDB: String = userData.name
-                            val userImageUrlFromDB: String = userData.profileImageUrl
+                            val userNameFromDB = userData.name
+                            val userImageUrlFromDB = userData.profileImageUrl
 
-                            val currentDate = SimpleDateFormat("yyyy-MM-dd").format(Date())
-
-                            // Create a blogItemModel
-                            val blogItemModel = BlogItemModel(
-                                title,
-                                userNameFromDB,
-                                currentDate,
-                                description,
-                                likeCount = 0,
-                                userImageUrlFromDB
-                            )
-                            // Generate a unique key for the blog post
+                            val currentDate = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
                             val key: String? = databaseReference.push().key
 
                             if (key != null) {
+                                val blogItemModel = BlogItemModel(
+                                    heading = title,
+                                    userName = userNameFromDB,
+                                    date = currentDate,
+                                    post = description,
+                                    likeCount = 0,
+                                    profileImage = userImageUrlFromDB,
+                                    postId = key,
+                                    likedBy = mutableListOf(), // initialize empty list
+                                    isSaved = false
+                                )
 
-                                blogItemModel.postId = key
-                                val blogReference: DatabaseReference = databaseReference.child(key)
-                                blogReference.setValue(blogItemModel)
+                                databaseReference.child(key).setValue(blogItemModel)
                                     .addOnSuccessListener {
+                                        Toast.makeText(this@AddArticleActivity, "Blog Added Successfully!", Toast.LENGTH_SHORT).show()
                                         finish()
                                     }
-                                    .addOnFailureListener {
-                                        Toast.makeText(this@AddArticleActivity, "Failed to add blog", Toast.LENGTH_SHORT).show()
+                                    .addOnFailureListener { e ->
+                                        Toast.makeText(this@AddArticleActivity, "Failed to add blog: ${e.message}", Toast.LENGTH_SHORT).show()
                                     }
                             }
-
                         }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
                         Toast.makeText(this@AddArticleActivity, "Failed to fetch user data: ${error.message}", Toast.LENGTH_SHORT).show()
                     }
-
                 })
+            } else {
+                Toast.makeText(this, "Please Login First", Toast.LENGTH_SHORT).show()
             }
         }
-
     }
 }

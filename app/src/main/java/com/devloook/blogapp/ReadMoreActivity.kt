@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.devloook.blogapp.R
 import com.bumptech.glide.request.RequestOptions
 import com.devloook.blogapp.Model.BlogItemModel
 import com.devloook.blogapp.databinding.ActivityReadMoreBinding
@@ -20,6 +21,7 @@ class ReadMoreActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(binding.root)
 
+        binding.backButton.setImageResource(R.drawable.stroke1)
         binding.backButton.setOnClickListener {
             finish()
         }

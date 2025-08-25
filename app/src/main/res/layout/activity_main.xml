@@ -16,7 +16,7 @@
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -26,7 +26,7 @@
         android:id="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/montserrat_semibold"
         android:text="New Feed"
@@ -41,7 +41,7 @@
         android:id="@+id/cardView2"
         android:layout_width="34dp"
         android:layout_height="34dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="16dp"
         app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/userName"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,7 +56,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageButton
-        android:id="@+id/save_article_button"
+        android:id="@+id/savedArticlesButton"
         android:layout_width="22dp"
         android:layout_height="21dp"
         android:layout_marginEnd="40dp"
@@ -81,13 +81,13 @@
         app:layout_constraintTop_toBottomOf="@+id/userName" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/blogRecyclerView"
+        android:id="@+id/savedArticlesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/searchView"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/searchView"
         app:layout_constraintTop_toBottomOf="@+id/searchView"
         app:layout_constraintVertical_bias="0.0"
@@ -99,13 +99,13 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:clickable="true"
-        app:borderWidth="2dp"
-        app:shapeAppearanceOverlay="@style/round"
-        app:tint="@color/white"
         app:backgroundTint="@color/blue"
+        app:borderWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/blogRecyclerView"
-        app:srcCompat="@drawable/vector" />
+        app:layout_constraintEnd_toEndOf="@+id/imageView7"
+        app:shapeAppearanceOverlay="@style/round"
+        app:srcCompat="@drawable/vector"
+        app:tint="@color/white" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

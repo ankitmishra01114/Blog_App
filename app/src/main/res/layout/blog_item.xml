@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/heading"
-            android:layout_width="230dp"
+            android:layout_width="210dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="9dp"
             android:layout_marginTop="13dp"
@@ -52,7 +52,6 @@
             android:layout_height="44dp"
             android:layout_marginStart="5dp"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="9dp"
             android:fontFamily="@font/montserrat_light"
             android:gravity="center"
             android:maxLines="2"
@@ -61,8 +60,6 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.196"
             app:layout_constraintStart_toEndOf="@+id/cardView3"
             app:layout_constraintTop_toTopOf="parent" />
 
