@@ -85,6 +85,19 @@ class MainActivity : AppCompatActivity() {
         binding.savedArticlesButton.setOnClickListener {
             startActivity(Intent(this, SavedArticlesActivity::class.java))
         }
+
+        // Go to profile activity
+        binding.profileImage.setOnClickListener{
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+        // Go to profile activity
+        binding.cardView2.setOnClickListener{
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
+
+
+
     }
 
     private fun loadUserProileImage(userId: String){
