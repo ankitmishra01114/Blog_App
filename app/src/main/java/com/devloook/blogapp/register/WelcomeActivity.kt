@@ -46,11 +46,11 @@ class WelcomeActivity : AppCompatActivity() {
         super.onStart()
         val currentUser: FirebaseUser? = auth.currentUser
         if (currentUser != null) {
+            // User already logged in → go to main app
             startActivity(Intent(this, MainActivity::class.java))
             finish()
-        } else {
-            startActivity(Intent(this, WelcomeActivity::class.java))
-            finish()
         }
+        // else → do nothing, stay on WelcomeActivity to let user log in/register
     }
+
 }
